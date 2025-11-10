@@ -17,6 +17,111 @@ An intelligent code review system that uses fine-tuned language models to detect
 - 📝 **Fine-tuning Capability**: Retrain the model on your own code examples
 - 💾 **Efficient Model**: Uses LoRA (Low-Rank Adaptation) for lightweight training (~147K parameters)
 
+## About This Project
+
+### What is AI Bug Detection Model?
+
+AI Bug Detection Model is an end-to-end intelligent code review system designed to help developers write better code by automatically detecting bugs, potential issues, and code quality improvements. Unlike traditional linters that only catch syntax and style violations, this system leverages deep learning to understand code semantics and provide contextual, intelligent feedback.
+
+### How It Works
+
+1. **Code Submission**: Submit your code through the web UI, VS Code extension, or API
+2. **Dual Analysis**: The system performs two-pronged analysis:
+   - **AI Analysis**: Uses a fine-tuned GPT-2 language model trained on code review examples to provide intelligent suggestions
+   - **Static Analysis**: Runs Pylint to catch style violations, unused variables, and common mistakes
+3. **Review Generation**: Returns a comprehensive review including:
+   - Natural language explanation of issues found
+   - Static analysis report with specific violations
+   - Suggested code patches (diffs)
+   - Full corrected code file
+
+### Why Fine-Tuning?
+
+Rather than using a generic large language model, this project uses a **fine-tuned GPT-2 model** optimized for code review tasks:
+
+- **Efficiency**: GPT-2 (124M parameters) is lightweight enough to run locally without GPU
+- **Relevance**: Fine-tuned on code review examples for domain-specific knowledge
+- **LoRA Optimization**: Uses Low-Rank Adaptation to efficiently train only 147K parameters (~0.1% of model)
+- **Speed**: Can perform inference in 2-5 seconds per review
+- **Customizable**: Easy to retrain on your own code style and patterns
+
+### Real-World Use Cases
+
+✅ **Automated Code Review**: Catch bugs before human reviewers see them
+✅ **Learning Tool**: Get explanations on why code needs improvement
+✅ **CI/CD Integration**: Add automated code quality gates to your pipeline
+✅ **Team Standards**: Fine-tune on your team's coding standards and practices
+✅ **Legacy Code Analysis**: Bulk analyze existing codebases for improvements
+✅ **Code Quality Metrics**: Track code quality improvements over time
+
+### Project Architecture
+
+The system is built with a modern, scalable architecture:
+
+- **Backend**: FastAPI microservice handling model inference and analysis
+- **Frontend**: React-based UI for easy code submission and review viewing
+- **ML Pipeline**: Training infrastructure to fine-tune models on new examples
+- **Extension**: VS Code integration for seamless developer workflow
+- **Storage**: Local model storage with support for multiple model variants
+
+### Key Technologies
+
+- **Deep Learning**: PyTorch & Hugging Face Transformers
+- **Fine-tuning**: PEFT (Parameter-Efficient Fine-Tuning) with LoRA
+- **Web Framework**: FastAPI + React + Vite
+- **Code Analysis**: Pylint for static analysis
+- **Editor Integration**: Monaco Editor + VS Code Extension API
+
+### Training Pipeline
+
+This project includes a complete training pipeline to adapt the model to your needs:
+
+```python
+# 1. Prepare your code review examples
+# 2. Run training script: python backend/train_small.py
+# 3. Model automatically fine-tunes on your examples
+# 4. Restart server to use new model
+```
+
+The training process:
+- Uses gradient accumulation for memory efficiency
+- Implements LoRA for parameter-efficient fine-tuning
+- Trains on CPU without requiring GPU
+- Completes in ~10 seconds for 20 examples on modern CPUs
+
+### Performance Characteristics
+
+| Metric | Value |
+|--------|-------|
+| Model Size | 548 MB (GPT-2) |
+| Trainable Parameters | 147K (with LoRA) |
+| Inference Time | 2-5 seconds |
+| Memory Usage | 2-3 GB |
+| Training Time (20 examples) | ~10 seconds |
+| Max Code Length | 512 tokens (~2000 chars) |
+
+### Open Source & Customizable
+
+- 🔓 **Fully Open Source**: MIT License - use and modify freely
+- 🎯 **No Cloud Dependencies**: Everything runs locally
+- 🧠 **Model Flexibility**: Support for multiple model backends (Phi-3, custom models)
+- 🔌 **Easy Integration**: Simple REST API for tool integration
+- 📚 **Community Driven**: Contribute improvements and training examples
+
+### What's Different?
+
+Compared to other code review tools:
+
+| Feature | AI Bug Finder | ChatGPT | Copilot | Traditional Linters |
+|---------|---------------|---------|---------|-------------------|
+| Local Execution | ✅ | ❌ | ❌ | ✅ |
+| Free & Open Source | ✅ | ❌ | ❌ | ✅ |
+| Fine-tunable | ✅ | ❌ | ❌ | ❌ |
+| Semantic Understanding | ✅ | ✅ | ✅ | ❌ |
+| No API Keys Needed | ✅ | ❌ | ❌ | ✅ |
+| VS Code Integration | ✅ | ⚠️ | ✅ | ✅ |
+| Lightweight | ✅ | ❌ | ❌ | ✅ |
+
 ## Quick Start (3 Steps)
 
 ### 1. Install Dependencies
