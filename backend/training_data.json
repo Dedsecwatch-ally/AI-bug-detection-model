@@ -1,0 +1,82 @@
+[
+  {
+    "code": "def foo():\n    x = 10\n    return x",
+    "review": "Issue: Unused variable x. The function returns the variable immediately, making the assignment pointless. Simplify to: return 10"
+  },
+  {
+    "code": "def add(a, b):\n    return a - b",
+    "review": "CRITICAL BUG: Function name suggests addition but implements subtraction. Fix: change 'a - b' to 'a + b'"
+  },
+  {
+    "code": "for i in range(len(my_list)):\n    print(my_list[i])",
+    "review": "Code smell: Inefficient iteration using index. Better approach: for item in my_list: print(item). This is more Pythonic and readable."
+  },
+  {
+    "code": "def process(data):\n    if data:\n        return data.strip()",
+    "review": "Issue: Missing return statement for False condition. Should explicitly return None or empty string. Also, data.strip() requires string type - add type hint or validation."
+  },
+  {
+    "code": "x = 1\nif x = 5:\n    print(x)",
+    "review": "SYNTAX ERROR: Using assignment (=) instead of comparison (==) in if statement. Fix: if x == 5:"
+  },
+  {
+    "code": "try:\n    result = 10 / 0\nexcept:\n    pass",
+    "review": "Bad practice: Bare except clause catches all exceptions including SystemExit and KeyboardInterrupt. Catch specific exception: except ZeroDivisionError. Also, should handle or log the error, not silently pass."
+  },
+  {
+    "code": "def calculate(a, b, c):\n    return a + b * c",
+    "review": "Good: Correct operator precedence. Suggestion: Add docstring explaining parameters and return value. Example: \"\"\"Calculate a + (b * c). Args: a, b, c (int/float). Returns: sum.\"\"\""
+  },
+  {
+    "code": "import os\nimport sys\nimport os\nimport json",
+    "review": "Issue: Duplicate import 'os' on lines 1 and 3. Remove duplicate. Also consider organizing imports: standard library first (os, sys), then third-party (json)."
+  },
+  {
+    "code": "def find_user(user_list, user_id):\n    for i in range(len(user_list)):\n        if user_list[i]['id'] == user_id:\n            return user_list[i]",
+    "review": "Works correctly but inefficient. Better approach: use next() with filter or list comprehension. Performance issue: O(n) linear search - consider using dict with id as key for O(1) lookup if called frequently."
+  },
+  {
+    "code": "password = input(\"Enter password: \")\nif password == \"admin123\":\n    print(\"Access granted\")",
+    "review": "SECURITY ISSUE: Hardcoded password in source code! Never commit passwords to repo. Use environment variables: password = os.getenv('ADMIN_PASSWORD'). Also use password hashing (bcrypt) for production."
+  },
+  {
+    "code": "def fibonacci(n):\n    if n <= 1:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)",
+    "review": "Works for small n but PERFORMANCE ISSUE: Exponential time complexity O(2^n). For n=40, takes minutes. Use memoization or dynamic programming. Alternative: def fib(n): a,b=0,1\\nfor _ in range(n): a,b=b,a+b\\nreturn a"
+  },
+  {
+    "code": "my_dict = {}\nmy_dict['key'] = 'value'\nif 'key' in my_dict:\n    print(my_dict['key'])",
+    "review": "Works correctly. Minor optimization: use .get() instead of checking key existence. Cleaner: print(my_dict.get('key', 'default'))"
+  },
+  {
+    "code": "def read_file(filename):\n    f = open(filename)\n    data = f.read()\n    f.close()\n    return data",
+    "review": "Works but not best practice. Use context manager to ensure file closes even if error occurs: with open(filename) as f: return f.read()"
+  },
+  {
+    "code": "x = [1, 2, 3]\ny = x\ny.append(4)\nprint(x)",
+    "review": "Output: [1,2,3,4]. This works as intended but shows list aliasing - y and x reference same object. If you need independent copy: y = x.copy() or y = x[:]"
+  },
+  {
+    "code": "def count_items(items):\n    count = 0\n    for item in items:\n        count += 1\n    return count",
+    "review": "Works correctly but unnecessary. Use built-in: return len(items). If you need to filter: return sum(1 for item in items if condition)"
+  },
+  {
+    "code": "import numpy as np\narray = np.array([1, 2, 3])\nresult = array * 2\nprint(result)",
+    "review": "Good: Correct NumPy usage with vectorization. Only suggestion: add comments if for non-obvious math operations. Works efficiently on large arrays."
+  },
+  {
+    "code": "def get_config():\n    config = {\n        'host': 'localhost',\n        'port': 5432,\n        'user': 'admin',\n        'password': 'secret123'\n    }\n    return config",
+    "review": "SECURITY: Hardcoded credentials! Move to environment variables or config file. Use python-dotenv: from dotenv import load_dotenv; load_dotenv()"
+  },
+  {
+    "code": "print(1 + 2)\nprint(3 + 4)\nprint(5 + 6)",
+    "review": "Code works but not scalable. Consider using a loop or function: for nums in [(1,2), (3,4), (5,6)]: print(sum(nums))"
+  },
+  {
+    "code": "def dangerous(user_input):\n    return eval(user_input)",
+    "review": "CRITICAL SECURITY ISSUE: Using eval() on user input allows arbitrary code execution! Never use eval(). Parse input safely with json.loads() or ast.literal_eval()"
+  },
+  {
+    "code": "data = [1, 2, 3, 4, 5]\nfiltered = [x for x in data if x > 2]\nprint(filtered)",
+    "review": "Excellent: Clean list comprehension. Pythonic and efficient. Output: [3, 4, 5]. Consider adding comment explaining filter condition."
+  }
+]

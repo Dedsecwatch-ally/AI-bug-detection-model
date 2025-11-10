@@ -1,0 +1,42 @@
+/* styles.css */
+body {
+  background: #0b1220;
+  color: #e6eef6;
+  margin: 0;
+  font-family: Inter, sans-serif;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: #111a2b;
+  border-bottom: 1px solid #1f2b44;
+}
+button {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:disabled {
+  background: #555;
+}
+main {
+  display: flex;
+  padding: 16px;
+  gap: 16px;
+}
+.editor, .output {
+  flex: 1;
+  background: #0e1829;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.output pre {
+  white-space: pre-wrap;
+  font-size: 14px;
+}
